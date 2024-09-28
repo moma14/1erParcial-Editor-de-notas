@@ -12,22 +12,23 @@ interface NoteFormProps {
   onSave: () => void;
 }
 
+const categories = ['Animales', 'Música', 'Comida', 'Deporte', 'Entretenimiento'];
+
 const NoteForm: React.FC<NoteFormProps> = ({ initialNote, onSave }) => {
   const { dispatch } = useNotes();
 
-  // Estados para los campos del formulario
+  // estos son los estados para los campos del formulario
   const [author, setAuthor] = useState('');
   const [category, setCategory] = useState('');
   const [notes, setNotes] = useState('');
 
-  // UseEffect para cargar los datos de la nota cuando se edita
+  // este UseEffect es para cargar los datos de la nota cuando se edita
   useEffect(() => {
     if (initialNote) {
       setAuthor(initialNote.author);
       setCategory(initialNote.category);
       setNotes(initialNote.notes);
     } else {
-      // con esto se limpian los campos si no hay nota inicial (modo de añadir)
       setAuthor('');
       setCategory('');
       setNotes('');
@@ -60,7 +61,6 @@ const NoteForm: React.FC<NoteFormProps> = ({ initialNote, onSave }) => {
       dispatch({ type: 'EDIT_NOTE', payload: note });
     } else {
       dispatch({ type: 'ADD_NOTE', payload: note });
-      // con esto se limpian los campos después de guardar
       setAuthor('');
       setCategory('');
       setNotes('');
@@ -77,12 +77,16 @@ const NoteForm: React.FC<NoteFormProps> = ({ initialNote, onSave }) => {
         onChange={(e) => setAuthor(e.target.value)}
         placeholder="Autor"
       />
-      <input
-        type="text"
-        value={category}
-        onChange={(e) => setCategory(e.target.value)}
-        placeholder="Categoría"
-      />
+      <select value={category} onChange={(e) => setCategory(e.target.value)}>
+        <option value="" disabled>
+          Seleccionar Categoría
+        </option>
+        {categories.map((cat) => (
+          <option key={cat} value={cat}>
+            {cat}
+          </option>
+        ))}
+      </select>
       <textarea
         value={notes}
         onChange={(e) => setNotes(e.target.value)}
