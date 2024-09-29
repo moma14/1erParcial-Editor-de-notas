@@ -248,14 +248,28 @@
   margin-top: 10px;
   justify-content: right;
 }
+.note-button2{
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  justify-content: right;
+}
+.borrar-categoria{
+  background-color: #dc3545;
+  color: white;
+}
 
 /* Estilos para los botones de editar y eliminar */
 .edit-button,
-.delete-button {
+.delete-button,
+.borrar-categoria {
   padding: 5px 10px;
   border: none;
   border-radius: 20px;
   cursor: pointer;
+}
+.borrar-categoria{
+  justify-content: right;
 }
 
 .edit-button {
