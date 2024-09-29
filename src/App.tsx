@@ -78,8 +78,8 @@ const NoteEditor: React.FC = () => {
                 onChange={(e) => setNewCategoryName(e.target.value)}
                 placeholder="Nombre de la nueva categoría"
               />
-              <button onClick={handleSaveCategory}>Guardar</button>
-              <button onClick={() => setIsCategoryModalOpen(false)}>Cancelar</button>
+              <button className="save-button" onClick={handleSaveCategory}>Guardar</button>
+              <button className="cerrar-button"onClick={() => setIsCategoryModalOpen(false)}>Cancelar</button>
             </div>
           </div>
         )}

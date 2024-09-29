@@ -92,7 +92,7 @@ const NoteForm: React.FC<NoteFormProps> = ({ initialNote, onSave, categories }) 
         onChange={(e) => setNotes(e.target.value)}
         placeholder="Notas"
       />
-      <button type="submit">{initialNote ? 'Guardar Cambios' : 'Guardar'}</button>
+      <button className="save-modal" type="submit">{initialNote ? 'Guardar Cambios' : 'Guardar'}</button>
     </form>
   );
 };

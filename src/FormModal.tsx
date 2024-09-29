@@ -20,7 +20,7 @@ const NoteModal: React.FC<NoteModalProps> = ({ isOpen, onClose, initialNote, cat
     <div className="modal">
       <div className="modal-content">
         <NoteForm initialNote={initialNote} onSave={onClose} categories={categories} />
-        <button onClick={onClose}>Cerrar</button>
+        <button  className="cerrar-modal" onClick={onClose}>Cerrar</button>
       </div>
     </div>
   );

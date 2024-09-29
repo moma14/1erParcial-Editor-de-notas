@@ -33,8 +33,6 @@ const NoteCard: React.FC<NoteCardProps> = ({ note, onEdit }) => {
       className="note-card"
       style={{ opacity: isDragging ? 0.5 : 1 }}
     >
-      <h3>{note.author}</h3>
-      <p>{note.notes}</p>
       <div className="note-buttons">
         <button
           className="edit-button"
@@ -54,6 +52,8 @@ const NoteCard: React.FC<NoteCardProps> = ({ note, onEdit }) => {
           Eliminar Nota
         </button>
       </div>
+      <h3>{note.author}</h3>
+      <p>{note.notes}</p>
     </div>
   );
 };
