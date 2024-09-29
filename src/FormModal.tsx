@@ -10,18 +10,17 @@ interface NoteModalProps {
     category: string;
     notes: string;
   };
+  categories: string[]; 
 }
 
-const NoteModal: React.FC<NoteModalProps> = ({ isOpen, onClose, initialNote }) => {
+const NoteModal: React.FC<NoteModalProps> = ({ isOpen, onClose, initialNote, categories }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="modal-overlay">
+    <div className="modal">
       <div className="modal-content">
-        <button className="close-button" onClick={onClose}>
-          X
-        </button>
-        <NoteForm initialNote={initialNote} onSave={onClose} />
+        <NoteForm initialNote={initialNote} onSave={onClose} categories={categories} />
+        <button onClick={onClose}>Cerrar</button>
       </div>
     </div>
   );

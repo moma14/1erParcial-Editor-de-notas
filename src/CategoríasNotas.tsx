@@ -1,33 +1,37 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import { useNotes } from './NotasContext';
 import { useDrag, useDrop } from 'react-dnd';
-import NoteCard from './Categorias'; 
+import NoteCard from './Categorias';
 import { ItemTypes } from './TiposdeItems';
 import { Note } from './TiposCategorias';
 
-
-const initialCategories = ['Animales', 'Música', 'Comida', 'Deporte', 'Entretenimiento'];
-
 interface CategoryCardsProps {
+  categories: string[];
   onEdit: (note: Note) => void;
+  setCategories: (categories: string[]) => void; // Añadido: Función para actualizar las categorías
 }
 
-const CategoryCards: React.FC<CategoryCardsProps> = ({ onEdit }) => {
+const CategoryCards: React.FC<CategoryCardsProps> = ({ categories, onEdit, setCategories }) => {
   const { notes, dispatch } = useNotes();
-  const [categories, setCategories] = useState(initialCategories);
 
   // esta función es para mover categorías completas
-  const moveCategory = useCallback((dragIndex: number, hoverIndex: number) => {
-    const updatedCategories = [...categories];
-    const [removed] = updatedCategories.splice(dragIndex, 1);
-    updatedCategories.splice(hoverIndex, 0, removed);
-    setCategories(updatedCategories);
-  }, [categories]);
+  const moveCategory = useCallback(
+    (dragIndex: number, hoverIndex: number) => {
+      const updatedCategories = [...categories];
+      const [removed] = updatedCategories.splice(dragIndex, 1);
+      updatedCategories.splice(hoverIndex, 0, removed);
+      setCategories(updatedCategories); // Actualiza las categorías en el estado principal
+    },
+    [categories, setCategories]
+  );
 
-  // esta función es para mover notas entre categorías
-  const moveNoteToCategory = useCallback((note: Note, newCategory: string) => {
-    dispatch({ type: 'EDIT_NOTE', payload: { ...note, category: newCategory } });
-  }, [dispatch]);
+  // esta Función es para mover notas entre categorías
+  const moveNoteToCategory = useCallback(
+    (note: Note, newCategory: string) => {
+      dispatch({ type: 'EDIT_NOTE', payload: { ...note, category: newCategory } });
+    },
+    [dispatch]
+  );
 
   return (
     <div className="cards-container">
@@ -56,7 +60,7 @@ interface CategoryCardProps {
 }
 
 const CategoryCard: React.FC<CategoryCardProps> = ({ category, notes, onEdit, onDropNote, moveCategory, index }) => {
-  // aqui se configura el drag para poder mover la tarjeta de categoría completa
+  // es la configuración de drag para mover la tarjeta de categoría completa
   const [{ isDragging: isCategoryDragging }, dragCategory] = useDrag({
     type: ItemTypes.CATEGORY,
     item: { index },
@@ -65,7 +69,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ category, notes, onEdit, on
     }),
   });
 
-  // esta configuración de drop es para permitir soltar otras categorías
+  // es la configuración de drop para permitir soltar otras categorías
   const [, dropCategory] = useDrop({
     accept: ItemTypes.CATEGORY,
     hover(item: { index: number }) {
@@ -76,7 +80,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ category, notes, onEdit, on
     },
   });
 
-  // esta configuración de drop es para las notas dentro de la categoría
+  // Configuración de drop para las notas dentro de la categoría
   const [, dropNote] = useDrop({
     accept: ItemTypes.NOTE,
     drop: (item: Note) => onDropNote(item, category),
@@ -92,7 +96,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ category, notes, onEdit, on
       style={{ opacity: isCategoryDragging ? 0.5 : 1 }}
     >
       <h2>{category}</h2>
-      {/* aqui permite soltar notas incluso si no hay ninguna nota dentro de la categoria*/}
+      {/* Contenedor que permite soltar notas incluso si está vacío */}
       <div ref={dropNote} className="notes-container">
         {notes.length === 0 && <p className="empty-placeholder">Suelta una nota aquí</p>}
         {notes.map((note) => (

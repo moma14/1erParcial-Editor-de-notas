@@ -1,3 +1,4 @@
+// NoteForm.tsx
 import React, { useState, FormEvent, useEffect } from 'react';
 import { z } from 'zod';
 import { useNotes } from './NotasContext';
@@ -10,19 +11,18 @@ interface NoteFormProps {
     notes: string;
   };
   onSave: () => void;
+  categories: string[]; 
 }
 
-const categories = ['Animales', 'Música', 'Comida', 'Deporte', 'Entretenimiento'];
-
-const NoteForm: React.FC<NoteFormProps> = ({ initialNote, onSave }) => {
+const NoteForm: React.FC<NoteFormProps> = ({ initialNote, onSave, categories }) => {
   const { dispatch } = useNotes();
 
-  // estos son los estados para los campos del formulario
+  // wstados para los campos del formulario
   const [author, setAuthor] = useState('');
   const [category, setCategory] = useState('');
   const [notes, setNotes] = useState('');
 
-  // este UseEffect es para cargar los datos de la nota cuando se edita
+  // Carga los datos de la nota cuando se edita
   useEffect(() => {
     if (initialNote) {
       setAuthor(initialNote.author);
