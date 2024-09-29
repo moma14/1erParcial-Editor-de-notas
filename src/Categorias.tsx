@@ -23,7 +23,7 @@ const NoteCard: React.FC<NoteCardProps> = ({ note, onEdit }) => {
   const handleDeleteNote = () => {
     const confirmDelete = window.confirm('¿Estás seguro que quieres eliminar esta nota?');
     if (confirmDelete) {
-      dispatch({ type: 'DELETE_NOTE', payload: note.id }); // dispatch es la acción es para eliminar la nota
+      dispatch({ type: 'DELETE_NOTE', payload: note.id }); // este dispatch es para eliminar la nota
     }
   };
 

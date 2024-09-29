@@ -1,6 +1,4 @@
-
 export const ItemTypes = {
-    NOTE: 'note',
-    CATEGORY: 'category',
-  };
-  
+  NOTE: 'note',
+  CATEGORY: 'category',
+};
