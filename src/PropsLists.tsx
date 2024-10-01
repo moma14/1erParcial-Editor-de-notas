@@ -6,15 +6,9 @@ interface NoteListProps {
 }
 
 const NoteList: React.FC<NoteListProps> = ({ onEdit }) => {
-  const { notes, dispatch } = useNotes();
+  const { notes } = useNotes();
 
-  const handleDelete = (id: number) => {
-    // Muestra una confirmación antes de que se elimine la nota
-    const confirmDelete = window.confirm('¿Quieres eliminar esta nota?');
-    if (confirmDelete) {
-      dispatch({ type: 'DELETE_NOTE', payload: id });
-    }
-  };
+
 
   return (
     <div>
@@ -24,7 +18,7 @@ const NoteList: React.FC<NoteListProps> = ({ onEdit }) => {
           <p>{note.category}</p>
           <p>{note.notes}</p>
           <button onClick={() => onEdit(note)}>Editar</button>
-          <button onClick={() => handleDelete(note.id)}>Eliminar</button>
+          <button>Eliminar</button>
         </div>
       ))}
     </div>

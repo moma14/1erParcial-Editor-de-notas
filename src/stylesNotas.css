@@ -304,3 +304,129 @@
 .delete-button:hover {
   background-color: #c82333;
 }
+.notes-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden; 
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: start; 
+}
+
+.note-card {
+  position: absolute;
+  top: 0;
+  left: 15px;
+  width: 120px; 
+  height: 120px; 
+  background-color: #EECEB9;
+  padding: 10px;
+  border-radius: 4px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+  z-index: 1;
+
+}
+
+.note-card:nth-child(2) {
+  top: 15px;
+  left: 15px;
+  z-index: 2;
+  background-color: #FFD09B;
+}
+
+.note-card:nth-child(3) {
+  top: 30px;
+  left: 15px;
+  z-index: 3;
+  background-color: #E8B86D;
+}
+
+.note-card:nth-child(4) {
+  top: 45px;
+  left: 15px;
+  z-index: 4;
+  background-color: #86AB89;
+}
+.note-card:nth-child(5){
+  top: 60px;
+  left: 15px;
+  z-index: 4;
+  background-color: #FF8A8A;
+}
+
+/* Controla las notas que se enciman de manera progresiva */
+.note-card:nth-child(n+2) {
+  top: calc(15px * (n - 1));
+  left: calc(15px * (n - 1));
+  z-index: calc(n);
+}
+
+.category-card {
+  position: relative; 
+  background: #F0EAAC;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  min-width: 180px;
+  max-width: 180px;
+  min-height: 300px; 
+  max-height: 300px;
+  overflow: hidden; 
+}
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content1 {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  width: 100%;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.confirm-button {
+  padding: 8px 12px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.cancel-button {
+  padding: 8px 12px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.confirm-button:hover {
+  background-color: #218838;
+}
+
+.cancel-button:hover {
+  background-color: #c82333;
+}
+

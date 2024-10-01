@@ -1,9 +1,10 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useNotes } from './NotasContext';
 import { useDrag, useDrop } from 'react-dnd';
 import NoteCard from './Categorias';
 import { ItemTypes } from './TiposdeItems';
 import { Note } from './TiposCategorias';
+import ConfirmModal from './ModalMessage'; 
 
 interface CategoryCardsProps {
   categories: string[];
@@ -33,20 +34,11 @@ const CategoryCards: React.FC<CategoryCardsProps> = ({ categories, onEdit, setCa
 
   const handleDeleteCategory = useCallback(
     (categoryToDelete: string) => {
-      // Mostrar alerta de confirmación
-      const confirmDelete = window.confirm(
-        `¿Estás seguro de que deseas eliminar la categoría "${categoryToDelete}" y todas sus notas?`
-      );
-      if (!confirmDelete) return;
-
-      // Eliminar notas de la categoría
       notes
         .filter((note: Note) => note.category === categoryToDelete)
         .forEach((note: Note) => {
           dispatch({ type: 'DELETE_NOTE', payload: note.id });
         });
-
-      // Eliminar la categoría
       setCategories(categories.filter((cat) => cat !== categoryToDelete));
     },
     [categories, notes, dispatch, setCategories]
@@ -63,7 +55,7 @@ const CategoryCards: React.FC<CategoryCardsProps> = ({ categories, onEdit, setCa
           onEdit={onEdit}
           onDropNote={moveNoteToCategory}
           moveCategory={moveCategory}
-          onDeleteCategory={handleDeleteCategory} // Pasar la función de eliminar categoría
+          onDeleteCategory={handleDeleteCategory}
         />
       ))}
     </div>
@@ -77,7 +69,7 @@ interface CategoryCardProps {
   onDropNote: (note: Note, newCategory: string) => void;
   moveCategory: (dragIndex: number, hoverIndex: number) => void;
   index: number;
-  onDeleteCategory: (category: string) => void; // Prop para manejar la eliminación
+  onDeleteCategory: (category: string) => void;
 }
 
 const CategoryCard: React.FC<CategoryCardProps> = ({
@@ -115,6 +107,17 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
     }),
   });
 
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+
+  const handleDelete = () => {
+    setIsDeleteModalOpen(true);
+  };
+
+  const handleConfirmDelete = () => {
+    onDeleteCategory(category);
+    setIsDeleteModalOpen(false);
+  };
+
   return (
     <div
       ref={(node) => dragCategory(dropCategory(node))}
@@ -122,8 +125,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
       style={{ opacity: isCategoryDragging ? 0.5 : 1 }}
     >
       <div className="note-button2">
-        {/* Botón para eliminar la categoría */}
-        <button onClick={() => onDeleteCategory(category)} className="borrar-categoria">
+        <button onClick={handleDelete} className="borrar-categoria">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
         <span className="material-symbols-outlined">delete</span>
         </button>
@@ -135,6 +137,14 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
           <NoteCard key={note.id} note={note} onEdit={onEdit} />
         ))}
       </div>
+
+      {/* Modal de confirmación para eliminar la categoría */}
+      <ConfirmModal
+        isOpen={isDeleteModalOpen}
+        message={`¿Estás seguro de que deseas eliminar la categoría "${category}" y todas sus notas?`}
+        onConfirm={handleConfirmDelete}
+        onCancel={() => setIsDeleteModalOpen(false)}
+      />
     </div>
   );
 };
