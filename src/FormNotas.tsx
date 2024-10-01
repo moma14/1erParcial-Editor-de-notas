@@ -1,4 +1,3 @@
-// NoteForm.tsx
 import React, { useState, FormEvent, useEffect } from 'react';
 import { z } from 'zod';
 import { useNotes } from './NotasContext';
@@ -92,8 +91,12 @@ const NoteForm: React.FC<NoteFormProps> = ({ initialNote, onSave, categories }) 
         onChange={(e) => setNotes(e.target.value)}
         placeholder="Notas"
       />
-      <button className="save-modal" type="submit">{initialNote ? 'Guardar Cambios' : 'Guardar'}</button>
-    </form>
+      <button className="save-modal" type="submit">
+        {initialNote ? 'Guardar Cambios' : 'Guardar'}
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+        <span className="material-symbols-outlined">save</span>   
+      </button>
+    </form>  
   );
 };
 

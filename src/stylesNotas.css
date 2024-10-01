@@ -204,7 +204,7 @@
 }
 
 .category-card {
-  background: #f0f0f0;
+  background: #F0EAAC;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -223,7 +223,7 @@
 
 /* Estilos para cada nota como tarjeta */
 .note-card {
-  background: white;
+  background: #EECEB9;
   padding: 15px;
   border-radius: 8px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);

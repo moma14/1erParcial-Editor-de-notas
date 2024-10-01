@@ -124,7 +124,8 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
       <div className="note-button2">
         {/* Botón para eliminar la categoría */}
         <button onClick={() => onDeleteCategory(category)} className="borrar-categoria">
-          Eliminar
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+        <span className="material-symbols-outlined">delete</span>
         </button>
       </div>
       <h2>{category}</h2>

@@ -43,13 +43,15 @@ const NoteCard: React.FC<NoteCardProps> = ({ note, onEdit }) => {
             }
           }}
         >
-          Editar Nota
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+        <span className="material-symbols-outlined">edit_note</span>
         </button>
         <button
           className="delete-button"
           onClick={handleDeleteNote}
         >
-          Eliminar Nota
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+        <span className="material-symbols-outlined">delete</span>
         </button>
       </div>
       <h3>{note.author}</h3>
