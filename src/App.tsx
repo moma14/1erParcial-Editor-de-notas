@@ -13,6 +13,7 @@ const NoteEditor: React.FC = () => {
   const [editingNote, setEditingNote] = useState<{ id: number; author: string; category: string; notes: string } | undefined>(undefined);
   const [categories, setCategories] = useState<string[]>(['Animales', 'Música', 'Comida', 'Deporte', 'Entretenimiento']);
   const [newCategoryName, setNewCategoryName] = useState('');
+  
 
   const handleAddNote = () => {
     setEditingNote(undefined);

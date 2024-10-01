@@ -37,11 +37,12 @@
   /* Estilo para las entradas de texto */
   input, textarea {
     padding: 20px;
-    background-color: #ccc;
+    background-color: transparent;
     border: 1px solid #080808;
     border-radius: 4px;
     width: 100%;
     box-sizing: border-box;
+    color: #000;
   }
   h2{
     color: black;
@@ -208,10 +209,18 @@
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  min-width: 150px;
+  max-width: 150px;
 }
 
 .category-card h2 {
   margin-bottom: 10px;
+  max-width: 100%;
+  max-height: 80px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+
 }
 
 /* Contenedor de las notas dentro de cada tarjeta de categoría */
@@ -225,7 +234,7 @@
 .note-card {
   background: #EECEB9;
   padding: 15px;
-  border-radius: 8px;
+  border-radius: 0px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -233,12 +242,18 @@
   margin-bottom: 8px;
   font-size: 16px;
   font-weight: bold;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .note-card p {
   margin: 0;
   font-size: 14px;
   color: #555;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 /* Contenedor de botones dentro de la nota */
