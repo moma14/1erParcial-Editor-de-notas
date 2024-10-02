@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { useNotes } from './NotasContext';
 import { useDrag, useDrop } from 'react-dnd';
-import NoteCard from './Categorias';
+import NoteCard from './Categorias'; 
 import { ItemTypes } from './TiposdeItems';
 import { Note } from './TiposCategorias';
 import ConfirmModal from './ModalMessage';
@@ -81,6 +81,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
   index,
   onDeleteCategory,
 }) => {
+  // este drag es para mover el contenedor completo
   const [{ isDragging: isCategoryDragging }, dragCategory] = useDrag({
     type: ItemTypes.CATEGORY,
     item: { index },
@@ -99,7 +100,16 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
     },
   });
 
-  const [{ isDragging: isNotesDragging }, dragNotesContainer] = useDrag({
+  // este drop es para mover las notas individualmente
+  const [, dropNote] = useDrop({
+    accept: ItemTypes.NOTE,
+    drop: (item: { note: Note }) => {
+      onDropNote(item.note, category);
+    },
+  });
+
+  // este drag es para mover el contenedor de notas completo
+  const [{ isDragging: isNotesContainerDragging }, dragNotesContainer] = useDrag({
     type: ItemTypes.NOTES_CONTAINER,
     item: { category, notes },
     collect: (monitor) => ({
@@ -117,7 +127,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
   });
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [isViewNotesModalOpen, setIsViewNotesModalOpen] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const handleDelete = () => {
     setIsDeleteModalOpen(true);
@@ -128,38 +138,33 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
     setIsDeleteModalOpen(false);
   };
 
-  const handleViewNotes = () => {
-    setIsViewNotesModalOpen(true);
-  };
-
-  const handleDragStartNote = () => {
-    setIsViewNotesModalOpen(false); 
+  const toggleExpand = () => {
+    setIsExpanded((prevState) => !prevState);
   };
 
   return (
     <div
-      ref={(node) => dragCategory(dropCategory(node))} 
-      className="category-card"
+      ref={(node) => dragCategory(dropCategory(node))}
+      className={`category-card ${isExpanded ? 'expanded' : ''}`}
       style={{ opacity: isCategoryDragging ? 0.5 : 1 }}
     >
       <div className="note-button2">
         <button onClick={handleDelete} className="borrar-categoria">
-          <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
           <span className="material-symbols-outlined">delete</span>
         </button>
       </div>
       <h2>{category}</h2>
 
-      {/* Contenedor de notas arrastrable como unidad */}
+      {/* Contenedor de notas */}
       <div
-        ref={(node) => dragNotesContainer(dropNotesContainer(node))} 
-        className="notes-container"
-        style={{ opacity: isNotesDragging ? 0.5 : 1, cursor: 'pointer' }}
-        onClick={handleViewNotes}
+        ref={(node) => dragNotesContainer(dropNotesContainer(dropNote(node)))}
+        className={`notes-container ${isExpanded ? 'expanded' : ''}`}
+        style={{ opacity: isNotesContainerDragging ? 0.5 : 1, cursor: 'pointer' }}
+        onClick={toggleExpand}
       >
         {notes.length === 0 && <p className="empty-placeholder">Suelta una nota aquí</p>}
         {notes.map((note) => (
-          <NoteCard key={note.id} note={note} onEdit={onEdit} />
+          <NoteCard key={note.id} note={note} onEdit={onEdit} isExpanded={isExpanded} />
         ))}
       </div>
 
@@ -169,67 +174,6 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
         onConfirm={handleConfirmDelete}
         onCancel={() => setIsDeleteModalOpen(false)}
       />
-
-      {/* Modal para ver todas las notas sin encimarse */}
-      {isViewNotesModalOpen && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <h2>Notas en la categoría "{category}"</h2>
-            <div className="all-notes-container" style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-              {notes.map((note) => (
-                <NoteCardInModal 
-                  key={note.id} 
-                  note={note} 
-                  onEdit={onEdit} 
-                  onDragStart={handleDragStartNote} 
-                  onDrop={onDropNote}
-                />
-              ))}
-            </div>
-            <button className="close-button" onClick={() => setIsViewNotesModalOpen(false)}>Cerrar</button>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-};
-
-interface NoteCardInModalProps {
-  note: Note;
-  onEdit: (note: Note) => void;
-  onDragStart: () => void;
-  onDrop: (note: Note, newCategory: string) => void;
-}
-
-const NoteCardInModal: React.FC<NoteCardInModalProps> = ({ note, onEdit, onDragStart, onDrop }) => {
-  const [{ isDragging }, drag] = useDrag({
-    type: ItemTypes.NOTE,
-    item: note,
-    collect: (monitor) => ({
-      isDragging: !!monitor.isDragging(),
-    }),
-  });
-
-  const [, drop] = useDrop({
-    accept: ItemTypes.NOTE,
-    drop: (item: Note) => onDrop(item, note.category),
-  });
-
-  return (
-    <div
-      ref={(node) => drag(drop(node))}
-      className="note-card"
-      style={{ position: 'relative', width: '100%', height: 'auto', opacity: isDragging ? 0.5 : 1 }}
-      onDragStart={onDragStart} 
-    >
-      <h3>{note.author}</h3>
-      <p>{note.notes}</p>
-      <div className="note-buttons">
-        <button className="edit-button" onClick={() => onEdit(note)}>
-          <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-          <span className="material-symbols-outlined">edit_note</span>
-        </button>
-      </div>
     </div>
   );
 };
