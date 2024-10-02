@@ -89,6 +89,14 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
     }),
   });
 
+  const [{ isDragging: isNotesDragging }, dragNotes] = useDrag({
+    type: ItemTypes.NOTES_CONTAINER,
+    item: { category, notes },
+    collect: (monitor) => ({
+      isDragging: !!monitor.isDragging(),
+    }),
+  });
+
   const [, dropCategory] = useDrop({
     accept: ItemTypes.CATEGORY,
     hover(item: { index: number }) {
@@ -99,9 +107,22 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
     },
   });
 
+  // Drop para las notas individuales
   const [, dropNote] = useDrop({
     accept: ItemTypes.NOTE,
     drop: (item: Note) => onDropNote(item, category),
+    collect: (monitor) => ({
+      isOver: !!monitor.isOver(),
+    }),
+  });
+
+  const [, dropNotesContainer] = useDrop({
+    accept: ItemTypes.NOTES_CONTAINER,
+    drop: (item: { category: string; notes: Note[] }) => {
+      item.notes.forEach((note) => {
+        onDropNote(note, category); // Mueve todas las notas al soltar el contenedor en otra categoría
+      });
+    },
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
     }),
@@ -131,14 +152,19 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
         </button>
       </div>
       <h2>{category}</h2>
-      <div ref={dropNote} className="notes-container">
+      
+      {/* Contenedor de notas como tarjeta arrastrable */}
+      <div
+        ref={(node) => dragNotes(dropNotesContainer(dropNote(node)))} // Aplica ref de dropNote aquí
+        className="notes-container"
+        style={{ opacity: isNotesDragging ? 0.5 : 1 }}
+      >
         {notes.length === 0 && <p className="empty-placeholder">Suelta una nota aquí</p>}
         {notes.map((note) => (
           <NoteCard key={note.id} note={note} onEdit={onEdit} />
         ))}
       </div>
 
-      {/* Modal de confirmación para eliminar la categoría */}
       <ConfirmModal
         isOpen={isDeleteModalOpen}
         message={`¿Estás seguro de que deseas eliminar la categoría "${category}" y todas sus notas?`}

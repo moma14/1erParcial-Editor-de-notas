@@ -38,6 +38,7 @@ const NoteCard: React.FC<NoteCardProps> = ({ note, onEdit }) => {
   };
 
   return (
+   
     <div
       ref={drag}
       className="note-card"
