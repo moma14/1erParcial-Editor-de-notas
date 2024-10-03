@@ -59,7 +59,7 @@
     align-items: center;
     background-color: #295F98;
     border-radius: 10px;
-    margin: 0 auto;
+    margin: 0;
     padding: 20px;
     text-align: center;
 }
@@ -206,7 +206,7 @@ select{
 }
 
 .category-card {
-  background: #A1D6B2;
+  background: #fff;
   padding: 20px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   min-width: 150px;
@@ -275,7 +275,7 @@ select{
 }
 .note-button2:hover{
   transform: scale(1.05); 
-  background-color: #A1D6B2; 
+  background-color: #fff; 
 }
 .category-card:hover .borrar-categoria {
   background-color: #c82333; 
@@ -422,7 +422,7 @@ select{
 
 .category-card {
   position: relative; 
-  background: #A1D6B2;
+  background: #fff;
   padding: 20px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   min-width: 350px;
