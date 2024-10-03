@@ -7,7 +7,7 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend'; 
 import './stylesNotas.css'; 
 import ConfirmModal from './ModalMessage';
-import Tooltip from '@mui/material/Tooltip'; // Importa el componente Tooltip
+import Tooltip from '@mui/material/Tooltip'; 
 
 const NoteEditor: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -95,18 +95,14 @@ const NoteEditor: React.FC = () => {
                 onChange={(e) => setNewCategoryName(e.target.value)}
                 placeholder="Nombre de la nueva categoría"
               />
-              <Tooltip title="Guardar Categoría" arrow>
-                <button className="save-button" onClick={handleSaveCategory}>
-                  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-                  <span className="material-symbols-outlined">save</span> 
-                </button>
-              </Tooltip>
-              <Tooltip title="Cancelar" arrow>
-                <button className="cerrar-button" onClick={() => setIsCategoryModalOpen(false)}>
-                  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-                  <span className="material-symbols-outlined">cancel</span>
-                </button>
-              </Tooltip>
+              <button className="save-button" onClick={handleSaveCategory}>
+                <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+                <span className="material-symbols-outlined">save</span> 
+              </button>
+              <button className="cerrar-button" onClick={() => setIsCategoryModalOpen(false)}>
+                <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+                <span className="material-symbols-outlined">cancel</span>
+              </button>
             </div>
           </div>
         )}

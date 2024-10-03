@@ -4,6 +4,7 @@ import { ItemTypes } from './TiposdeItems';
 import { Note } from './TiposCategorias';
 import { useNotes } from './NotasContext';
 import ConfirmModal from './ModalMessage';
+import Tooltip from '@mui/material/Tooltip'; 
 
 interface NoteCardProps {
   note: Note;
@@ -46,20 +47,25 @@ const NoteCard: React.FC<NoteCardProps> = ({ note, onEdit, isExpanded }) => {
       className="note-card"
       style={{ opacity: isDragging ? 0.5 : 1 }}
     >
-     {/* Mostrar los botones de editar/eliminar solo si el contenedor está expandido */}
+      {/* Mostrar los botones de editar/eliminar solo si el contenedor está expandido */}
       {isExpanded && (
         <div className="note-buttons">
-          <button className="edit-button" onClick={() => setIsEditModalOpen(true)}>
-            <span className="material-symbols-outlined">edit_note</span>
-          </button>
-          <button className="delete-button" onClick={handleDeleteNote}>
-            <span className="material-symbols-outlined">delete</span>
-          </button>
+          <Tooltip title="Editar Nota" arrow>
+            <button className="edit-button" onClick={() => setIsEditModalOpen(true)}>
+              <span className="material-symbols-outlined">edit_note</span>
+            </button>
+          </Tooltip>
+          <Tooltip title="Eliminar Nota" arrow>
+            <button className="delete-button" onClick={handleDeleteNote}>
+              <span className="material-symbols-outlined">delete</span>
+            </button>
+          </Tooltip>
         </div>
       )}
 
       <h3>{note.author}</h3>
       <p>{note.notes}</p>
+      
       {/* Modal de confirmación para eliminar */}
       <ConfirmModal
         isOpen={isDeleteModalOpen}

@@ -5,6 +5,7 @@ import NoteCard from './Categorias';
 import { ItemTypes } from './TiposdeItems';
 import { Note } from './TiposCategorias';
 import ConfirmModal from './ModalMessage';
+import Tooltip from '@mui/material/Tooltip'; 
 
 interface CategoryCardsProps {
   categories: string[];
@@ -149,9 +150,11 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
       style={{ opacity: isCategoryDragging ? 0.5 : 1 }}
     >
       <div className="note-button2">
-        <button onClick={handleDelete} className="borrar-categoria">
-          <span className="material-symbols-outlined">delete</span>
-        </button>
+        <Tooltip title="Eliminar categoría" arrow>
+          <button onClick={handleDelete} className="borrar-categoria">
+            <span className="material-symbols-outlined">delete</span>
+          </button>
+        </Tooltip>
       </div>
       <h2>{category}</h2>
 
