@@ -6,6 +6,8 @@ import CategoryCards from './CategoríasNotas';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend'; 
 import './stylesNotas.css'; 
+import ConfirmModal from './ModalMessage';
+import Tooltip from '@mui/material/Tooltip'; // Importa el componente Tooltip
 
 const NoteEditor: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -13,7 +15,8 @@ const NoteEditor: React.FC = () => {
   const [editingNote, setEditingNote] = useState<{ id: number; author: string; category: string; notes: string } | undefined>(undefined);
   const [categories, setCategories] = useState<string[]>(['Animales', 'Música', 'Comida', 'Deporte', 'Entretenimiento']);
   const [newCategoryName, setNewCategoryName] = useState('');
-  
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false); 
+  const [confirmMessage, setConfirmMessage] = useState(''); 
 
   const handleAddNote = () => {
     setEditingNote(undefined);
@@ -35,8 +38,17 @@ const NoteEditor: React.FC = () => {
       setNewCategoryName('');
       setIsCategoryModalOpen(false);
     } else {
-      alert('El nombre de la categoría no puede estar vacío.');
+      setConfirmMessage('El nombre de la categoría no puede estar vacío.');
+      setIsConfirmModalOpen(true); 
     }
+  };
+
+  const handleConfirm = () => {
+    setIsConfirmModalOpen(false); 
+  };
+
+  const handleCancel = () => {
+    setIsConfirmModalOpen(false);
   };
 
   return (
@@ -44,13 +56,17 @@ const NoteEditor: React.FC = () => {
       <NotesProvider>
         <Navbar />
         <div className="button-container">
-          <button className="add-note-button" onClick={handleAddNote}>
-            <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-            <span className="material-symbols-outlined">add_notes</span>
-          </button>
-          <button className="add-category-button" onClick={handleAddCategory}>
-            <span className="material-symbols-outlined">add_box</span> {/* Icono para agregar categoría */}
-          </button>
+          <Tooltip title="Añadir Nota" arrow>
+            <button className="add-note-button" onClick={handleAddNote}>
+              <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+              <span className="material-symbols-outlined">add_notes</span>
+            </button>
+          </Tooltip>
+          <Tooltip title="Añadir Categoría" arrow>
+            <button className="add-category-button" onClick={handleAddCategory}>
+              <span className="material-symbols-outlined">add_box</span> {/* Icono para agregar categoría */}
+            </button>
+          </Tooltip>
         </div>
         <CategoryCards categories={categories} onEdit={handleEditNote} setCategories={setCategories} />
 
@@ -79,17 +95,29 @@ const NoteEditor: React.FC = () => {
                 onChange={(e) => setNewCategoryName(e.target.value)}
                 placeholder="Nombre de la nueva categoría"
               />
-              <button className="save-button" onClick={handleSaveCategory}>
-                <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-                <span className="material-symbols-outlined">save</span> 
-              </button>
-              <button className="cerrar-button"onClick={() => setIsCategoryModalOpen(false)}>
-                <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-                <span className="material-symbols-outlined">cancel</span>
-              </button>
+              <Tooltip title="Guardar Categoría" arrow>
+                <button className="save-button" onClick={handleSaveCategory}>
+                  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+                  <span className="material-symbols-outlined">save</span> 
+                </button>
+              </Tooltip>
+              <Tooltip title="Cancelar" arrow>
+                <button className="cerrar-button" onClick={() => setIsCategoryModalOpen(false)}>
+                  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+                  <span className="material-symbols-outlined">cancel</span>
+                </button>
+              </Tooltip>
             </div>
           </div>
         )}
+
+        {/* Modal de confirmación reutilizado */}
+        <ConfirmModal 
+          isOpen={isConfirmModalOpen} 
+          message={confirmMessage} 
+          onConfirm={handleConfirm} 
+          onCancel={handleCancel} 
+        />
       </NotesProvider>
     </DndProvider>
   );
