@@ -20,9 +20,9 @@ const NoteModal: React.FC<NoteModalProps> = ({ isOpen, onClose, initialNote, cat
     <div className="modal">
       <div className="modal-content">
         <NoteForm initialNote={initialNote} onSave={onClose} categories={categories} />
-        <button  className="cerrar-modal" onClick={onClose}>
-        <span className="material-symbols-outlined">cancel</span>
-        </button>
+          <button  className="cerrar-modal" onClick={onClose}>
+          <span className="material-symbols-outlined">cancel</span>
+          </button>
       </div>
     </div>
   );

@@ -57,7 +57,7 @@ const NoteEditor: React.FC = () => {
         {/* Modal para agregar o editar una nota */}
         {isModalOpen && (
           <div className="modal">
-            <div className="modal-content">
+            <div className="modal-content1">
               <NoteModal
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}

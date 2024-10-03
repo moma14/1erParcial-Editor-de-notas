@@ -46,10 +46,7 @@ const NoteCard: React.FC<NoteCardProps> = ({ note, onEdit, isExpanded }) => {
       className="note-card"
       style={{ opacity: isDragging ? 0.5 : 1 }}
     >
-      <h3>{note.author}</h3>
-      <p>{note.notes}</p>
-
-      {/* Mostrar los botones de editar/eliminar solo si el contenedor está expandido */}
+     {/* Mostrar los botones de editar/eliminar solo si el contenedor está expandido */}
       {isExpanded && (
         <div className="note-buttons">
           <button className="edit-button" onClick={() => setIsEditModalOpen(true)}>
@@ -61,6 +58,8 @@ const NoteCard: React.FC<NoteCardProps> = ({ note, onEdit, isExpanded }) => {
         </div>
       )}
 
+      <h3>{note.author}</h3>
+      <p>{note.notes}</p>
       {/* Modal de confirmación para eliminar */}
       <ConfirmModal
         isOpen={isDeleteModalOpen}

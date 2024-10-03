@@ -57,7 +57,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #545B77;
+    background-color: #295F98;
     border-radius: 10px;
     margin: 0 auto;
     padding: 20px;
@@ -94,7 +94,7 @@
   transition: background-color 0.3s;
   margin: 20px;
 }
-.save-modal{
+.guardar-modal{
   padding: 8px 12px;
   cursor: pointer;
   border: none;
@@ -169,19 +169,24 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000; /* Asegura que el modal esté encima de otros elementos */
+  z-index: 9999; /* Asegura que el modal esté encima de otros elementos */
 }
 
-.modal-content {
+.modal-content,.modal-content1 {
   background: #F0EAAC;
   padding: 20px;
   border-radius: 8px;
   max-width: 500px;
   width: 90%;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+   z-index: 10000;
 }
 
-
+select{
+  background: transparent;
+  border: 1px solid #080808;
+  color: #000;
+}
 .close-button {
   position: absolute;
   top: 10px;
@@ -201,7 +206,7 @@
 }
 
 .category-card {
-  background: #F0EAAC;
+  background: #A1D6B2;
   padding: 20px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   min-width: 150px;
@@ -338,35 +343,30 @@
 .note-card:nth-child(1){
   top: 10px;
   left: 15px;
-  z-index: 2;
   background-color: #C5705D;
   min-width: 100px;
 }
 .note-card:nth-child(2) {
   top: 45px;
   left: 15px;
-  z-index: 2;
   background-color: #FFD09B;
   min-width: 100px;}
 
 .note-card:nth-child(3) {
   top: 30px;
   left: 15px;
-  z-index: 3;
   background-color: #E8B86D;
   min-width: 100px;}
 
 .note-card:nth-child(4) {
   top: 15px;
   left: 15px;
-  z-index: 4;
   background-color: #86AB89;
   min-width: 100px;
 }
 .note-card:nth-child(n+5){
   top: 0px;
   left: 15px;
-  z-index: 4;
   background-color: #FF8A8A;
   min-width: 10px;
 }
@@ -380,7 +380,7 @@
 
 .category-card {
   position: relative; 
-  background: #F0EAAC;
+  background: #A1D6B2;
   padding: 20px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   min-width: 350px;
@@ -409,14 +409,7 @@
   z-index: 1000;
 }
 
-.modal-content1 {
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  max-width: 400px;
-  width: 100%;
-}
+
 
 .modal-buttons {
   display: flex;

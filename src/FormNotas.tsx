@@ -1,6 +1,7 @@
-import React, { useState, FormEvent, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { z } from 'zod';
 import { useNotes } from './NotasContext';
+import ConfirmModal from './ModalMessage'; 
 
 interface NoteFormProps {
   initialNote?: {
@@ -16,12 +17,15 @@ interface NoteFormProps {
 const NoteForm: React.FC<NoteFormProps> = ({ initialNote, onSave, categories }) => {
   const { dispatch } = useNotes();
 
-  // wstados para los campos del formulario
+  // estos son los estados para los campos del formulario
   const [author, setAuthor] = useState('');
   const [category, setCategory] = useState('');
   const [notes, setNotes] = useState('');
 
-  // Carga los datos de la nota cuando se edita
+  // estados para el modal de alerta
+  const [isAlertModalOpen, setIsAlertModalOpen] = useState(false);
+
+  // aqui se carga los datos de la nota cuando se edita
   useEffect(() => {
     if (initialNote) {
       setAuthor(initialNote.author);
@@ -41,11 +45,10 @@ const NoteForm: React.FC<NoteFormProps> = ({ initialNote, onSave, categories }) 
     notes: z.string().min(1, 'Las notas son requeridas'),
   });
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
+  const handleSaveClick = () => {
     const validation = noteSchema.safeParse({ author, category, notes });
     if (!validation.success) {
-      alert('Se necesitan llenar todos los campos');
+      setIsAlertModalOpen(true); // Abre el modal si la validación falla
       return;
     }
 
@@ -65,38 +68,47 @@ const NoteForm: React.FC<NoteFormProps> = ({ initialNote, onSave, categories }) 
       setNotes('');
     }
 
-    onSave();
+    onSave(); 
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        value={author}
-        onChange={(e) => setAuthor(e.target.value)}
-        placeholder="Autor"
-      />
-      <select value={category} onChange={(e) => setCategory(e.target.value)}>
-        <option value="" disabled>
-          Seleccionar Categoría
-        </option>
-        {categories.map((cat) => (
-          <option key={cat} value={cat}>
-            {cat}
+    <>
+      <form>
+        <input
+          type="text"
+          value={author}
+          onChange={(e) => setAuthor(e.target.value)}
+          placeholder="Autor"
+        />
+        <select value={category} onChange={(e) => setCategory(e.target.value)}>
+          <option value="" disabled>
+            Seleccionar Categoría
           </option>
-        ))}
-      </select>
-      <textarea
-        value={notes}
-        onChange={(e) => setNotes(e.target.value)}
-        placeholder="Notas"
-      />
-      <button className="save-modal" type="submit">
-        {initialNote ? 'Guardar Cambios' : ''}
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-        <span className="material-symbols-outlined">save</span>   
+          {categories.map((cat) => (
+            <option key={cat} value={cat}>
+              {cat}
+            </option>
+          ))}
+        </select>
+        <textarea
+          value={notes}
+          onChange={(e) => setNotes(e.target.value)}
+          placeholder="Notas"
+        />
+      </form>
+      {/* Botón de guardar con onClick */}
+      <button className="guardar-modal" onClick={handleSaveClick} type="button">
+        <span className="material-symbols-outlined">save</span>
       </button>
-    </form>  
+
+      {/* Modal de alerta para campos vacíos */}
+      <ConfirmModal
+        isOpen={isAlertModalOpen}
+        message="Se necesitan llenar todos los campos"
+        onConfirm={() => setIsAlertModalOpen(false)} 
+        onCancel={() => setIsAlertModalOpen(false)} 
+      />
+    </>
   );
 };
 
