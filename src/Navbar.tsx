@@ -7,6 +7,7 @@ const Navbar: React.FC = () => {
      <div className='nav-container'>
         {/*aqui esta todo lo que contiene adentro el nav*/}
         <h1>Editor de Notas</h1>
+        <h2>Bienvenido a mi editor de notas</h2>
      </div>
     </nav>
   );

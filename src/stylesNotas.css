@@ -40,9 +40,11 @@
     width: 100%;
     box-sizing: border-box;
     color: #000;
+    width: calc(100%-20px);
   }
   h2{
     color: black;
+    font-size: 1.2em;
   }
   .notas-container {
     display: flex;
@@ -56,7 +58,7 @@
     justify-content: space-between;
     align-items: center;
     background-color: #545B77;
-    border-radius: 35px;
+    border-radius: 10px;
     margin: 0 auto;
     padding: 20px;
     text-align: center;
@@ -126,7 +128,7 @@
 .add-note-button:hover {
   background-color: #0056b3;
 }
-.add-category-button{
+.add-category-button{ 
   padding: 8px 12px;
   cursor: pointer;
   border: none;
@@ -201,7 +203,6 @@
 .category-card {
   background: #F0EAAC;
   padding: 20px;
-  border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   min-width: 150px;
   max-width: 150px;
@@ -222,9 +223,10 @@
 .notes-container {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 0px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   align-items: center;
+  position: absolute;
 }
 
 /* Estilos para cada nota como tarjeta */
@@ -324,7 +326,6 @@
   padding: 15px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
   white-space: normal;
-  margin-bottom: 0; /* Elimina margen inferior para mejorar la disposición en columnas */
 }
 
 .note-card h3,
@@ -335,11 +336,10 @@
 
 
 .note-card:nth-child(1){
-  top: 60px;
+  top: 10px;
   left: 15px;
   z-index: 2;
   background-color: #C5705D;
-  border-radius: 8px;
   min-width: 150px;
 }
 .note-card:nth-child(2) {
@@ -347,7 +347,6 @@
   left: 15px;
   z-index: 2;
   background-color: #FFD09B;
-  border-radius: 8px;
   min-width: 150px;
 }
 
@@ -356,7 +355,6 @@
   left: 15px;
   z-index: 3;
   background-color: #E8B86D;
-  border-radius: 8px;
   min-width: 150px;
 }
 
@@ -365,7 +363,6 @@
   left: 15px;
   z-index: 4;
   background-color: #86AB89;
-  border-radius: 8px;
   min-width: 150px;
 }
 .note-card:nth-child(n+5){
@@ -373,7 +370,6 @@
   left: 15px;
   z-index: 4;
   background-color: #FF8A8A;
-  border-radius: 8px;
   min-width: 10px;
 }
 
@@ -388,9 +384,8 @@
   position: relative; 
   background: #F0EAAC;
   padding: 20px;
-  border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  min-width: 320px;
+  min-width: 350px;
   max-width: 180px;
   min-height: 350px; 
   max-height: 350px;
