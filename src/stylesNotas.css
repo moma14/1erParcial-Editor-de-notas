@@ -45,6 +45,8 @@
   h2{
     color: black;
     font-size: 1.2em;
+    top: 0px;
+    margin: 0;
   }
   .notas-container {
     display: flex;
@@ -52,16 +54,17 @@
     align-items: center; 
     justify-content: center;
   }
+  
  
 .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #295F98;
-    border-radius: 10px;
-    margin: 0;
-    padding: 20px;
-    text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #E5D9F2;
+  border-radius: 40px;
+  margin: 0;
+  padding: 20px;
+  text-align: center;
 }
 
 
@@ -173,7 +176,7 @@
 }
 
 .modal-content,.modal-content1 {
-  background: #F0EAAC;
+  background: #fff;
   padding: 20px;
   border-radius: 8px;
   max-width: 500px;
